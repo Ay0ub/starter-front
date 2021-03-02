@@ -18,9 +18,9 @@ export class ProductComponent implements OnInit {
   apiPost = 'http://127.0.0.1:8000/api/product';
   product = new Product();
 
-  getProducts(api: String)
+  getProducts()
   {
-    this.dataService.get(api).subscribe(
+    this.dataService.get(this.apiGet).subscribe(
       data => {
         this.products = data;
       }
@@ -30,19 +30,22 @@ export class ProductComponent implements OnInit {
   {
     this.dataService.store(this.apiPost, this.product).subscribe(
       () => {
-        this.getProducts(this.apiGet);
+        this.getProducts();
       }
     )
   }
   editProduct(id: number)
   {
-    
+    var element = _.find(this.products, (o) => {
+      return o.id == id;
+    });
+    this.product = element;
   }
   updateProduct(id: number)
   {
     this.dataService.update(this.apiPost, id, this.product).subscribe(
       () => {
-        this.getProducts(this.apiGet)
+        this.getProducts()
       }
     )
   }
@@ -50,22 +53,35 @@ export class ProductComponent implements OnInit {
   {
     this.dataService.delete(this.apiPost,id).subscribe(
       () => {
-        this.getProducts(this.apiGet);
+        this.getProducts();
       }
     )
   }
-  open(content: any, id: number) {
-    console.log(id);
+
+  // ngModal
+  openEdit(content: any, id: number) {
+    this.editProduct(id)
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
-      console.log(`Closed with: ${result}`)
-      console.log(id)
+      this.updateProduct(id);
     }, (reason) => {
-      console.log(`Dismissed by ${reason}`);
+      //
+    });
+  }
+  openCreate(content: any) {
+    this.product = {
+      name : "",
+      color: "",
+      price: "",
+    };
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.addProduct();
+    }, (reason) => {
+      //
     });
   }
 
   ngOnInit(): void {
-    this.getProducts(this.apiGet)
+    this.getProducts()
   }
 
 }

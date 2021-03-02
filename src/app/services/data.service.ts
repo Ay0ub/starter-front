@@ -12,14 +12,14 @@ export class DataService {
   {
     return this.http.get(url);
   }
-  store(url: any, data: any)
+  store(url: any, object: object)
   {
-    return this.http.post(url, data);
+    return this.http.post(url, object);
   }
-  update(url: any, id:number, data: any)
+  update(url: any, id:number, object: object)
   {
     url = url + '/' + id;
-    return this.http.put(url, data);
+    return this.http.put(url, object);
   }
   delete(url: any, id: number)
   {

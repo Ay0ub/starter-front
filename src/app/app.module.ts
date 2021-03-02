@@ -12,9 +12,10 @@ import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { MenuComponent } from './menu/menu.component';
-import { CreateComponent } from './person/create/create.component';
-import { UpdateComponent } from './person/update/update.component';
-import { IndexComponent } from './person/index/index.component';
+import { PersonIndexComponent } from './person/person-index/person-index.component';
+import { PersonCreateComponent } from './person/person-create/person-create.component';
+import { PersonEditComponent } from './person/person-edit/person-edit.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -24,9 +25,10 @@ import { IndexComponent } from './person/index/index.component';
     HeaderComponent,
     FooterComponent,
     MenuComponent,
-    CreateComponent,
-    UpdateComponent,
-    IndexComponent
+    PersonIndexComponent,
+    PersonCreateComponent,
+    PersonEditComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

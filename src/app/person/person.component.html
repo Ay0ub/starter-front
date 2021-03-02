@@ -1,1 +1,124 @@
-<p>person works!</p>
+<p></p>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <button class="btn btn-primary" (click)="openCreate(add)">Add</button>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>First name</th>
+                        <th>Last name</th>
+                        <th>email</th>
+                        <th>Phone</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let person of persons">
+                        <td> {{person.firstName}} </td>
+                        <td> {{person.lastName}} </td>
+                        <td> {{person.email}} </td>
+                        <td> {{person.phone}} </td>
+                        <td>
+                            <button class="btn btn-info" (click)="openEdit(edit, person.id)">edit</button>
+                            <button class="btn btn-danger" (click)="deletePerson(person.id)">delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for edit -->
+
+<ng-template #edit let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="form-group">
+
+                <label for="firstName">First name</label>
+                <div class="input-group">
+                    <input type="text" id="firstName" class="form-control" [value]="person.firstName" [(ngModel)]="person.firstName"
+                        [ngModelOptions]="{standalone: true}" required>
+                </div>
+
+                <label for="lastName">Last name</label>
+                <div class="input-group">
+                    <input type="text" id="lastName" class="form-control" [value]="person.lastName"
+                        [(ngModel)]="person.lastName" [ngModelOptions]="{standalone: true}">
+                </div>
+
+                <label for="email">Email</label>
+                <div class="input-group">
+                    <input type="text" id="email" class="form-control" [value]="person.email"
+                        [(ngModel)]="person.email" [ngModelOptions]="{standalone: true}">
+                </div>
+
+                <label for="phone">Phone</label>
+                <div class="input-group">
+                    <input type="text" id="phone" class="form-control" [value]="person.phone" [(ngModel)]="person.phone"
+                        [ngModelOptions]="{standalone: true}">
+                </div>
+
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    </div>
+</ng-template>
+
+<!-- Modal for create -->
+
+<ng-template #add let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="form-group">
+
+                <label for="firstName">First name</label>
+                <div class="input-group">
+                    <input type="text" id="firstName" class="form-control" [value]="person.firstName"
+                        [(ngModel)]="person.firstName" [ngModelOptions]="{standalone: true}" required>
+                </div>
+
+                <label for="lastName">Last name</label>
+                <div class="input-group">
+                    <input type="text" id="lastName" class="form-control" [value]="person.lastName"
+                        [(ngModel)]="person.lastName" [ngModelOptions]="{standalone: true}">
+                </div>
+
+                <label for="email">Email</label>
+                <div class="input-group">
+                    <input type="text" id="email" class="form-control" [value]="person.email" [(ngModel)]="person.email"
+                        [ngModelOptions]="{standalone: true}">
+                </div>
+
+                <label for="phone">Phone</label>
+                <div class="input-group">
+                    <input type="text" id="phone" class="form-control" [value]="person.phone" [(ngModel)]="person.phone"
+                        [ngModelOptions]="{standalone: true}">
+                </div>
+
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    </div>
+</ng-template>
