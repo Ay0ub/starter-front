@@ -30,7 +30,7 @@ export class ProductComponent implements OnInit {
   {
     this.dataService.store(this.apiPost, this.product).subscribe(
       () => {
-        this.getProducts();
+        this.products.push(this.product);
       }
     )
   }
@@ -53,7 +53,9 @@ export class ProductComponent implements OnInit {
   {
     this.dataService.delete(this.apiPost,id).subscribe(
       () => {
-        this.getProducts();
+        _.remove(this.products, (n:any) => {
+          return n.id == id;
+        })
       }
     )
   }

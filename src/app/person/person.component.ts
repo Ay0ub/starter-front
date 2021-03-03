@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataService } from './../services/data.service';
 import { Person } from './../entities/person';
@@ -11,7 +12,7 @@ import * as _ from 'lodash';
 })
 export class PersonComponent implements OnInit {
 
-  constructor(private dataService: DataService,private modalService: NgbModal) { }
+  constructor(private dataService: DataService,private modalService: NgbModal, private router: Router) { }
 
   person = new Person();
   persons: any;
@@ -30,7 +31,7 @@ export class PersonComponent implements OnInit {
   {
     this.dataService.store(this.apiPost, this.person).subscribe(
       () => {
-        this.getPersons();
+        this.persons.push(this.person)
       }
     )
   }
@@ -52,7 +53,9 @@ export class PersonComponent implements OnInit {
   {
     this.dataService.delete(this.apiPost, id).subscribe(
       () => {
-        this.getPersons()
+        _.remove(this.persons, (n:any) => {
+          return n.id == id;
+        })
       }
     )
   }
@@ -67,16 +70,17 @@ export class PersonComponent implements OnInit {
     });
   }
   openCreate(content: any) {
-    // _.forEach(this.person, (value, key) => {
-    //   //key = "";
-    //   console.log('ok'+value+'ok '+key);
-    // })
     this.person = {
       firstName : "",
       lastName: "",
       email: "",
       phone: "",
     };
+    // _.each(this.person, (value,key) => {
+    //   console.log(key);
+    //   _.set(this.person, key, "");
+    // })
+
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.addPerson();
       //
@@ -87,6 +91,7 @@ export class PersonComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPersons();
+    // console.log(this.router.url)
   }
 
 }
