@@ -4,6 +4,7 @@ import { DataService } from './../services/data.service';
 import { Person } from './../entities/person';
 import { Component, OnInit } from '@angular/core';
 import * as _ from 'lodash';
+import { toArray } from 'lodash';
 
 @Component({
   selector: 'app-person',
@@ -18,6 +19,8 @@ export class PersonComponent implements OnInit {
   persons: any;
   apiGet = 'http://127.0.0.1:8000/api/persons';
   apiPost = 'http://127.0.0.1:8000/api/person';
+  errors: any;
+  type = "warning";
 
   getPersons()
   {
@@ -32,6 +35,8 @@ export class PersonComponent implements OnInit {
     this.dataService.store(this.apiPost, this.person).subscribe(
       () => {
         this.persons.push(this.person)
+      }, (error) => {
+        this.errors = _.values(_.values(error.error)[1]);
       }
     )
   }
@@ -45,6 +50,9 @@ export class PersonComponent implements OnInit {
   {
     this.dataService.update(this.apiPost, id, this.person).subscribe(
       () => {
+        this.getPersons();
+      }, (error) => {
+        this.errors = _.values(_.values(error.error)[1]);
         this.getPersons();
       }
     )
@@ -76,10 +84,6 @@ export class PersonComponent implements OnInit {
       email: "",
       phone: "",
     };
-    // _.each(this.person, (value,key) => {
-    //   console.log(key);
-    //   _.set(this.person, key, "");
-    // })
 
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.addPerson();
@@ -87,6 +91,10 @@ export class PersonComponent implements OnInit {
     }, (reason) => {
       //
     });
+  }
+
+  close(error: any) {
+    this.errors.splice(this.errors.indexOf(error), 1);
   }
 
   ngOnInit(): void {

@@ -17,6 +17,8 @@ export class ProductComponent implements OnInit {
   apiGet = 'http://127.0.0.1:8000/api/products';
   apiPost = 'http://127.0.0.1:8000/api/product';
   product = new Product();
+  errors: any;
+  type = "warning";
 
   getProducts()
   {
@@ -31,14 +33,14 @@ export class ProductComponent implements OnInit {
     this.dataService.store(this.apiPost, this.product).subscribe(
       () => {
         this.products.push(this.product);
+      }, (error) => {
+        this.errors = _.values(_.values(error.error)[1]);
       }
     )
   }
   editProduct(id: number)
   {
-    var element = _.find(this.products, (o) => {
-      return o.id == id;
-    });
+    var element = _.find(this.products, o => o.id == id);
     this.product = element;
   }
   updateProduct(id: number)
@@ -46,6 +48,9 @@ export class ProductComponent implements OnInit {
     this.dataService.update(this.apiPost, id, this.product).subscribe(
       () => {
         this.getProducts()
+      }, (error) => {
+        this.errors = _.values(_.values(error.error)[1]);
+        this.getProducts();
       }
     )
   }
@@ -59,6 +64,9 @@ export class ProductComponent implements OnInit {
       }
     )
   }
+  close(error: any) {
+    this.errors.splice(this.errors.indexOf(error), 1);
+  }
 
   // ngModal
   openEdit(content: any, id: number) {
@@ -70,11 +78,7 @@ export class ProductComponent implements OnInit {
     });
   }
   openCreate(content: any) {
-    this.product = {
-      name : "",
-      color: "",
-      price: "",
-    };
+    this.product = new Product();
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.addProduct();
     }, (reason) => {

@@ -1,5 +1,9 @@
 <p></p>
 
+<p *ngFor="let error of errors">
+    <ngb-alert [type]="type" (closed)="close(error)"><strong>Error!</strong> {{error}}</ngb-alert>
+</p>
+
 <div class="container">
     <div class="card">
         <div class="card-header">
@@ -46,17 +50,17 @@
 
                 <label for="name">Name</label>
                 <div class="input-group">
-                    <input type="text" id="name" class="form-control" [value]="product.name" [(ngModel)]="product.name" [ngModelOptions]="{standalone: true}" required>
+                    <input type="text" id="name" class="form-control"  [(ngModel)]="product.name" >
                 </div>
 
                 <label for="color">Color</label>
                 <div class="input-group">
-                    <input type="text" id="color" class="form-control" [value]="product.color" [(ngModel)]="product.color" [ngModelOptions]="{standalone: true}">
+                    <input type="text" id="color" class="form-control"  [(ngModel)]="product.color" >
                 </div>
 
                 <label for="price">Price</label>
                 <div class="input-group">
-                    <input type="text" id="price" class="form-control" [value]="product.price" [(ngModel)]="product.price" [ngModelOptions]="{standalone: true}">
+                    <input type="text" id="price" class="form-control" [(ngModel)]="product.price" >
                 </div>
 
             </div>
@@ -82,20 +86,17 @@
 
                 <label for="name">Name</label>
                 <div class="input-group">
-                    <input type="text" id="name" class="form-control" [value]="product.name" [(ngModel)]="product.name"
-                        [ngModelOptions]="{standalone: true}" required>
+                    <input type="text" id="name" class="form-control" [(ngModel)]="product.name" [ngModelOptions]="{standalone: true}" required>
                 </div>
 
                 <label for="color">Color</label>
                 <div class="input-group">
-                    <input type="color" id="color" class="form-control" [value]="product.color"
-                        [(ngModel)]="product.color" [ngModelOptions]="{standalone: true}">
+                    <input type="color" id="color" class="form-control" [(ngModel)]="product.color" [ngModelOptions]="{standalone: true}">
                 </div>
 
                 <label for="price">Price</label>
                 <div class="input-group">
-                    <input type="text" id="price" class="form-control" [value]="product.price"
-                        [(ngModel)]="product.price" [ngModelOptions]="{standalone: true}">
+                    <input type="text" id="price" class="form-control" [(ngModel)]="product.price" [ngModelOptions]="{standalone: true}">
                 </div>
 
             </div>

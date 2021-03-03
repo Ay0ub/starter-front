@@ -17,11 +17,7 @@ export class PersonIndexComponent implements OnInit {
 
   getPersons()
   {
-    this.dataService.get(this.apiGet).subscribe(
-      data => {
-        this.persons = data;
-      }
-    )
+    // this.dataService.get(this.apiGet,this.persons)
   }
 
   ngOnInit(): void {

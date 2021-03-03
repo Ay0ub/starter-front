@@ -1,5 +1,9 @@
 <p></p>
 
+<p *ngFor="let error of errors">
+    <ngb-alert [type]="type" (closed)="close(error)"><strong>Error!</strong> {{error}}</ngb-alert>
+</p>
+
 <div class="container">
     <div class="card">
         <div class="card-header">
