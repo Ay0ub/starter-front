@@ -1,3 +1,5 @@
+import { environment } from './../../environments/environment';
+import { ModelEnum } from '../enums/model-enum.enum';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -8,22 +10,26 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
 
-  get(url: any)
+  apiURL = environment.apiURL;
+
+  all(api: ModelEnum)
   {
-    return this.http.get(url);
+    return this.http.get(this.apiURL + api);
   }
-  store(url: any, object: object)
+  get(api: ModelEnum, id: number)
   {
-    return this.http.post(url, object);
+    return this.http.get(this.apiURL + api + id)
   }
-  update(url: any, id:number, object: object)
+  store(api: ModelEnum, object: object)
   {
-    url = url + '/' + id;
-    return this.http.put(url, object);
+    return this.http.post(this.apiURL + api, object);
   }
-  delete(url: any, id: number)
+  update(api: ModelEnum, id:number, object: object)
   {
-    url = url + '/' + id;
-    return this.http.delete(url);
+    return this.http.put(this.apiURL + api + id, object);
+  }
+  delete(api: ModelEnum, id: number)
+  {
+    return this.http.delete(this.apiURL + api + id);
   }
 }

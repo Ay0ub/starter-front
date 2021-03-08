@@ -1,8 +1,8 @@
 <p></p>
 
-<p *ngFor="let error of errors">
+<!-- <p *ngFor="let error of errors">
     <ngb-alert [type]="type" (closed)="close(error)"><strong>Error!</strong> {{error}}</ngb-alert>
-</p>
+</p> -->
 
 <div class="container">
     <div class="card">
@@ -22,11 +22,14 @@
                 <tbody>
                     <tr *ngFor="let product of products">
                         <td> {{product.name}} </td>
-                        <td> {{product.color}} </td>
+                        <td>
+                            <input type="color" [value]="product.color" disabled>
+                            <!-- {{product.color}}  -->
+                        </td>
                         <td> {{product.price}} </td>
                         <td>
                             <button class="btn btn-info" (click)="openEdit(edit, product.id)">Edit</button>
-                            <button class="btn btn-danger" (click)="deleteProduct(product.id)">delete</button>
+                            <button class="btn btn-danger" (click)="delete(product.id)">delete</button>
                         </td>
                     </tr>
                 </tbody>
@@ -45,7 +48,7 @@
         </button>
     </div>
     <div class="modal-body">
-        <form>
+        <!-- <form> -->
             <div class="form-group">
 
                 <label for="name">Name</label>
@@ -55,7 +58,7 @@
 
                 <label for="color">Color</label>
                 <div class="input-group">
-                    <input type="text" id="color" class="form-control"  [(ngModel)]="product.color" >
+                    <input type="color" id="color" class="form-control"  [(ngModel)]="product.color" >
                 </div>
 
                 <label for="price">Price</label>
@@ -64,7 +67,7 @@
                 </div>
 
             </div>
-        </form>
+        <!-- </form> -->
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
@@ -81,26 +84,26 @@
         </button>
     </div>
     <div class="modal-body">
-        <form>
+        <!-- <form> -->
             <div class="form-group">
 
                 <label for="name">Name</label>
                 <div class="input-group">
-                    <input type="text" id="name" class="form-control" [(ngModel)]="product.name" [ngModelOptions]="{standalone: true}" required>
+                    <input type="text" id="name" class="form-control" [(ngModel)]="product.name">
                 </div>
 
                 <label for="color">Color</label>
                 <div class="input-group">
-                    <input type="color" id="color" class="form-control" [(ngModel)]="product.color" [ngModelOptions]="{standalone: true}">
+                    <input type="color" id="color" class="form-control" [(ngModel)]="product.color">
                 </div>
 
                 <label for="price">Price</label>
                 <div class="input-group">
-                    <input type="text" id="price" class="form-control" [(ngModel)]="product.price" [ngModelOptions]="{standalone: true}">
+                    <input type="text" id="price" class="form-control" [(ngModel)]="product.price">
                 </div>
 
             </div>
-        </form>
+        <!-- </form> -->
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>

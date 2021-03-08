@@ -1,10 +1,10 @@
+import { Person } from './../../entities/person';
+import { ModelEnum } from './../../enums/model-enum.enum';
+import { DataService } from './../../services/data.service';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DataService } from './../services/data.service';
-import { Person } from './../entities/person';
 import { Component, OnInit } from '@angular/core';
-import * as _ from 'lodash';
-import { toArray } from 'lodash';
+import * as _ from 'lodash'
 
 @Component({
   selector: 'app-person',
@@ -15,24 +15,22 @@ export class PersonComponent implements OnInit {
 
   constructor(private dataService: DataService,private modalService: NgbModal, private router: Router) { }
 
-  person = new Person();
+  person = new Person;
   persons: any;
-  apiGet = 'http://127.0.0.1:8000/api/persons';
-  apiPost = 'http://127.0.0.1:8000/api/person';
   errors: any;
   type = "warning";
 
-  getPersons()
+  get()
   {
-    this.dataService.get(this.apiGet).subscribe(
+    this.dataService.all(ModelEnum.person).subscribe(
       data => {
         this.persons = data;
       }
     )
   }
-  addPerson()
+  add()
   {
-    this.dataService.store(this.apiPost, this.person).subscribe(
+    this.dataService.store(ModelEnum.person, this.person).subscribe(
       () => {
         this.persons.push(this.person)
       }, (error) => {
@@ -40,26 +38,26 @@ export class PersonComponent implements OnInit {
       }
     )
   }
-  editPerson(id: number)
+  edit(id: number)
   {
     this.person = _.find(this.persons, (o) => {
       return o.id == id;
     })
   }
-  updatePerson(id: number)
+  update(id: number)
   {
-    this.dataService.update(this.apiPost, id, this.person).subscribe(
+    this.dataService.update(ModelEnum.person, id, this.person).subscribe(
       () => {
-        this.getPersons();
+        this.get();
       }, (error) => {
         this.errors = _.values(_.values(error.error)[1]);
-        this.getPersons();
+        this.get();
       }
     )
   }
-  deletePerson(id: number)
+  delete(id: number)
   {
-    this.dataService.delete(this.apiPost, id).subscribe(
+    this.dataService.delete(ModelEnum.person, id).subscribe(
       () => {
         _.remove(this.persons, (n:any) => {
           return n.id == id;
@@ -70,23 +68,18 @@ export class PersonComponent implements OnInit {
 
   // ngModal
   openEdit(content: any, id: number) {
-    this.editPerson(id)
+    this.edit(id)
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
-      this.updatePerson(id);
+      this.update(id);
     }, (reason) => {
       //
     });
   }
   openCreate(content: any) {
-    this.person = {
-      firstName : "",
-      lastName: "",
-      email: "",
-      phone: "",
-    };
+    this.person = new Person;
 
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
-      this.addPerson();
+      this.add();
       //
     }, (reason) => {
       //
@@ -98,7 +91,7 @@ export class PersonComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getPersons();
+    this.get();
     // console.log(this.router.url)
   }
 

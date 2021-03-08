@@ -1,5 +1,5 @@
-import { Person } from './../../entities/person';
-import { DataService } from './../../services/data.service';
+import { Person } from './../../../entities/person';
+import { DataService } from './../../../services/data.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -9,10 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PersonIndexComponent implements OnInit {
 
-  constructor(private dataService: DataService) { }
+  constructor(private DataService: DataService) { }
 
   apiGet = 'http://127.0.0.1:8000/api/persons';
-  person = new Person();
+  person = new Person;
   persons: any;
 
   getPersons()

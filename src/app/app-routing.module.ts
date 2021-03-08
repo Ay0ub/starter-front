@@ -1,6 +1,6 @@
-import { HomeComponent } from './home/home.component';
-import { ProductComponent } from './product/product.component';
-import { PersonComponent } from './person/person.component';
+import { HomeComponent } from './components/home/home.component';
+import { ProductComponent } from './components/product/product.component';
+import { PersonComponent } from './components/person/person.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 

@@ -1,7 +1,8 @@
-import { DataService } from './../services/data.service';
+import { ModelEnum } from './../../enums/model-enum.enum';
+import { Product } from './../../entities/product';
+import { DataService } from './../../services/data.service';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Product } from '../entities/product';
 import * as _ from 'lodash';
 
 @Component({
@@ -13,24 +14,22 @@ export class ProductComponent implements OnInit {
 
   constructor(private dataService: DataService, private modalService: NgbModal) { }
 
-  products: any;
-  apiGet = 'http://127.0.0.1:8000/api/products';
-  apiPost = 'http://127.0.0.1:8000/api/product';
   product = new Product();
+  products: any;
   errors: any;
   type = "warning";
 
-  getProducts()
+  get()
   {
-    this.dataService.get(this.apiGet).subscribe(
+    this.dataService.all(ModelEnum.product).subscribe(
       data => {
         this.products = data;
       }
     )
   }
-  addProduct()
+  add()
   {
-    this.dataService.store(this.apiPost, this.product).subscribe(
+    this.dataService.store(ModelEnum.product ,this.product).subscribe(
       () => {
         this.products.push(this.product);
       }, (error) => {
@@ -38,25 +37,30 @@ export class ProductComponent implements OnInit {
       }
     )
   }
-  editProduct(id: number)
+  edit(id: number)
   {
+    // this.dataService.get(ModelEnum.product, id).subscribe(
+    //   result => {
+    //     // this.product = result;
+    //   }
+    // )
     var element = _.find(this.products, o => o.id == id);
     this.product = element;
   }
-  updateProduct(id: number)
+  update(id: number)
   {
-    this.dataService.update(this.apiPost, id, this.product).subscribe(
+    this.dataService.update(ModelEnum.product ,id , this.product).subscribe(
       () => {
-        this.getProducts()
+        this.get()
       }, (error) => {
         this.errors = _.values(_.values(error.error)[1]);
-        this.getProducts();
+        this.get();
       }
     )
   }
-  deleteProduct(id: number)
+  delete(id: number)
   {
-    this.dataService.delete(this.apiPost,id).subscribe(
+    this.dataService.delete(ModelEnum.product ,id).subscribe(
       () => {
         _.remove(this.products, (n:any) => {
           return n.id == id;
@@ -70,24 +74,24 @@ export class ProductComponent implements OnInit {
 
   // ngModal
   openEdit(content: any, id: number) {
-    this.editProduct(id)
+    this.edit(id)
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
-      this.updateProduct(id);
+      this.update(id);
     }, (reason) => {
       //
     });
   }
   openCreate(content: any) {
-    this.product = new Product();
+    this.product = new Product;
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
-      this.addProduct();
+      this.add();
     }, (reason) => {
       //
     });
   }
 
   ngOnInit(): void {
-    this.getProducts()
+    this.get()
   }
 
 }
