@@ -12,24 +12,24 @@ export class DataService {
 
   apiURL = environment.apiURL;
 
-  all(api: ModelEnum)
+  all(model: ModelEnum)
   {
-    return this.http.get(this.apiURL + api);
+    return this.http.get(this.apiURL + model);
   }
-  get(api: ModelEnum, id: number)
+  get(model: ModelEnum, id: number)
   {
-    return this.http.get(this.apiURL + api + id)
+    return this.http.get(this.apiURL + model + id)
   }
-  store(api: ModelEnum, object: object)
+  store(model: ModelEnum, object: object)
   {
-    return this.http.post(this.apiURL + api, object);
+    return this.http.post(this.apiURL + model, object);
   }
-  update(api: ModelEnum, id:number, object: object)
+  update(model: ModelEnum, id:number, object: object)
   {
-    return this.http.put(this.apiURL + api + id, object);
+    return this.http.put(this.apiURL + model + id, object);
   }
-  delete(api: ModelEnum, id: number)
+  delete(model: ModelEnum, id: number)
   {
-    return this.http.delete(this.apiURL + api + id);
+    return this.http.delete(this.apiURL + model + id);
   }
 }

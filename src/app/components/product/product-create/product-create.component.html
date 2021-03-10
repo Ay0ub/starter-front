@@ -1,4 +1,4 @@
-<!-- <ng-template #add let-modal>
+<ng-template #content let-modal>
     <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -6,28 +6,30 @@
         </button>
     </div>
     <div class="modal-body">
-            <div class="form-group">
+        <!-- <form> -->
+        <div class="form-group">
 
-                <label for="name">Name</label>
-                <div class="input-group">
-                    <input type="text" id="name" class="form-control" [value]="product.name" [(ngModel)]="product.name" required>
-                </div>
-
-                <label for="color">Color</label>
-                <div class="input-group">
-                    <input type="color" id="color" class="form-control" [value]="product.color"
-                        [(ngModel)]="product.color">
-                </div>
-
-                <label for="price">Price</label>
-                <div class="input-group">
-                    <input type="text" id="price" class="form-control" [value]="product.price"
-                        [(ngModel)]="product.price">
-                </div>
-
+            <label for="name">Name</label>
+            <div class="input-group">
+                <input type="text" id="name" class="form-control" [(ngModel)]="product.name">
             </div>
+
+            <label for="color">Color</label>
+            <div class="input-group">
+                <input type="color" id="color" class="form-control" [(ngModel)]="product.color">
+            </div>
+
+            <label for="price">Price</label>
+            <div class="input-group">
+                <input type="text" id="price" class="form-control" [(ngModel)]="product.price">
+            </div>
+
+        </div>
+        <!-- </form> -->
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
     </div>
-</ng-template> -->
+</ng-template>
+
+<!-- <button class="btn btn-primary pull-right" (click)="open(content)">add</button> -->

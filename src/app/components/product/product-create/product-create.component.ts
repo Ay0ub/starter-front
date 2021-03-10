@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModelEnum } from './../../../enums/model-enum.enum';
+import { DataService } from './../../../services/data.service';
+import { Component, Input, OnInit, ViewChild, OnChanges, SimpleChanges, ElementRef, Output, EventEmitter } from '@angular/core';
 import { Product } from 'src/app/entities/product';
 
 @Component({
@@ -8,20 +11,33 @@ import { Product } from 'src/app/entities/product';
 })
 export class ProductCreateComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dataService: DataService, private modalService: NgbModal) { }
 
-  product = {
-    name: "ex",
-    color: 'ex',
-    price: '3'
+  product: any = new Product; 
+
+  @ViewChild('content') content! : ElementRef<HTMLInputElement>
+  @Output() get = new EventEmitter(); 
+
+  add()
+  {
+    this.dataService.store(ModelEnum.product ,this.product).subscribe(
+      () => {
+        this.get.emit();
+        // this.products.push(this.product);
+      }, (error) => {
+        //
+      }
+    )
+  }
+  open() {
+    this.modalService.open(this.content).result.then((result) => {
+      this.add();
+    }, (reason) => {
+
+    });
   }
 
   ngOnInit(): void {
-    // this.product = {
-    //   name: "",
-    //   color: "",
-    //   price: "",
-    // }
+    
   }
-
 }

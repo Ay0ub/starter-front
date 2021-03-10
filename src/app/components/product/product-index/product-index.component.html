@@ -1,1 +1,50 @@
-<p>product-index works!</p>
+<p></p>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <button class="btn btn-primary pull-right" (click)="openToCreate()">add</button>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Color</th>
+                        <th>Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <p *ngIf="isLoading">
+                        loading ...
+                    </p>
+                    <tr *ngFor="let product of products">
+                        <td> {{product.name}} </td>
+                        <td>
+                            <input type="color" [value]="product.color" disabled>
+                        </td>
+                        <td> {{product.price}} </td>
+                        <td>
+                            <button class="btn btn-info" (click)="openToEdit(product.id)">Edit</button>
+                            <button class="btn btn-danger" (click)="openDeletingConfirm(product)">delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for creat -->
+
+<app-product-create (get)="get()"></app-product-create>
+
+<!-- Modal for edit -->
+
+<app-product-edit (get)="get()"></app-product-edit>
+
+<!-- Modal to confirm deleting -->
+
+<app-product-delete (get)="get()"></app-product-delete>
+
